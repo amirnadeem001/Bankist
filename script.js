@@ -10,6 +10,16 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  movementsDates: [
+    '2019-11-18T21:31:17.178Z',
+    '2019-12-23T07:42:02.383Z',
+    '2020-01-28T09:15:04.904Z',
+    '2020-04-01T10:17:24.185Z',
+    '2020-05-08T14:11:59.604Z',
+    '2020-05-27T17:01:17.194Z',
+    '2020-07-11T23:36:17.929Z',
+    '2020-07-12T10:51:36.790Z',
+  ],
 };
 
 const account2 = {
@@ -62,9 +72,9 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
 // Bankist Application
+/////////////////////////////////////////////////
+
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
@@ -130,7 +140,6 @@ const calcSummary = acc => {
 // create usernames for each account
 let createUsernames = account => {
   account.map(acc => {
-    // let name = ;
     let userName = acc.owner
       .toLowerCase()
       .split(' ')
@@ -150,9 +159,16 @@ let updateUI = acc => {
 
 // Login Implementing
 let curruntAccount;
+
+let now = new Date();
+let day = `${now.getDate()}`.padStart(2, '0');
+let month = `${now.getMonth()}`.padStart(2, '0');
+let year = now.getFullYear();
+
+labelDate.textContent = `${day}/${month}/${year} ${now.getHours()}:${now.getMinutes()}`;
+
 btnLogin.addEventListener('click', e => {
   e.preventDefault(); //prevent from reload when click
-  // update the UI
 
   // Find the Account object using username
   curruntAccount = accounts.find(
@@ -189,8 +205,6 @@ btnTransfer.addEventListener('click', e => {
 
   inputTransferAmount.value = inputTransferTo.value = '';
   inputTransferAmount.blur();
-
-  // Add to reciver Account
 });
 
 // Close the acccount
@@ -226,33 +240,3 @@ btnLoan.addEventListener('click', e => {
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
 });
-
-//////////////////////////////////////////////////////////////
-
-// Dogs Cheaking Challenge
-
-let juliaDogs = [3, 5, 2, 12, 7];
-let kateDogs = [5, 1, 15, 8, 3];
-
-let cheakDogs = (juliaDogs, kateDogs) => {
-  let juliaDogsCopy = juliaDogs.slice();
-  juliaDogsCopy.splice(0, 1);
-  juliaDogsCopy.splice(-2);
-
-  let kateDogsCopy = kateDogs.slice();
-  kateDogsCopy.splice(0, 1);
-  kateDogsCopy.splice(-2);
-
-  let dogs = kateDogsCopy.concat(juliaDogsCopy);
-
-  let printResult = (juliaDogsCopy, kateDogsCopy) => {
-    dogs.forEach(function (age, i) {
-      let agecheak =
-        age >= 3
-          ? `Dog number ${i + 1} is an Adult and is ${age} years old`
-          : `Dog number ${i + 1} is still puppy`;
-    });
-  };
-  printResult(juliaDogsCopy, kateDogsCopy);
-};
-cheakDogs(juliaDogs, kateDogs);
