@@ -104,7 +104,7 @@ btnSort.addEventListener('click', e => {
 
 let calculateBlance = acc => {
   acc.balance = acc.movements.reduce((accu, mov) => accu + mov, 0);
-  labelBalance.textContent = `${acc.balance}$`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}$`;
 };
 
 // Calculate the Summary(incoming & outcoming)
@@ -113,18 +113,18 @@ const calcSummary = acc => {
   let inPayment = acc.movements
     .filter(mov => mov > 0)
     .reduce((premov, currmov) => premov + currmov, 0);
-  labelSumIn.textContent = `${inPayment}$`;
+  labelSumIn.textContent = `${inPayment.toFixed(2)}$`;
 
   let outPayment = acc.movements
     .filter(mov => mov < 0)
     .reduce((premov, currmov) => premov + currmov, 0);
-  labelSumOut.textContent = `${outPayment}$`;
+  labelSumOut.textContent = `${outPayment.toFixed(2)}$`;
 
   let interest = acc.movements
     .filter(mov => mov > 0)
     .map(dep => (dep * `${acc.interestRate}`) / 100)
     .reduce((accu, int) => accu + int, 0);
-  labelSumInterest.textContent = `${interest}$`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}$`;
 };
 
 // create usernames for each account
@@ -217,7 +217,7 @@ btnClose.addEventListener('click', e => {
 
 btnLoan.addEventListener('click', e => {
   e.preventDefault();
-  let amount = Number(inputLoanAmount.value);
+  let amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && curruntAccount.movements.some(mov => mov >= amount * 0.1)) {
     curruntAccount.movements.push(amount);
